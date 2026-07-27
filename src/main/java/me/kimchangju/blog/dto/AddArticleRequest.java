@@ -17,6 +17,10 @@ public class AddArticleRequest {
 
     // 생성자를 사용해 객체 생성
     public Article toEntity() {
-        return Article.builder().title(title).content(content).build();
+        return Article
+                .builder()
+                .title(title)
+                .content(content)
+                .build();
     }
 }
