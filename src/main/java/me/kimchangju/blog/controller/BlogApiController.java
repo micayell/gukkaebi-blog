@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import me.kimchangju.blog.domain.Article;
 import me.kimchangju.blog.dto.AddArticleRequest;
 import me.kimchangju.blog.dto.ArticleResponse;
+import me.kimchangju.blog.dto.UpdateArticleRequest;
 import me.kimchangju.blog.service.BlogService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,5 +58,14 @@ public class BlogApiController {
 
         return ResponseEntity.ok()
                 .build();
+    }
+
+    // 블로그 글 수정 기능
+    @PutMapping("/api/articles/{id}")
+    public ResponseEntity<Article> updateArticle(@PathVariable long id, @RequestBody UpdateArticleRequest request) {
+        Article updateArticle = blogService.update(id, request);
+
+        return ResponseEntity.ok()
+                .body(updateArticle);
     }
 }
