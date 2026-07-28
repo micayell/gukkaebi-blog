@@ -2,11 +2,14 @@ package me.kimchangju.blog.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import me.kimchangju.blog.domain.Article;
 import me.kimchangju.blog.dto.ArticleListViewResponse;
+import me.kimchangju.blog.dto.ArticleViewResponse;
 import me.kimchangju.blog.service.BlogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -27,5 +30,14 @@ public class BlogViewController {
         // articleList.html라는 뷰 조회
         return "articleList";
     }
+
+    @GetMapping("/articles/{id}")
+    public String getArticle(@PathVariable Long id, Model model) {
+        Article article = blogService.findById(id);
+        model.addAttribute("article", new ArticleViewResponse(article));
+
+        return "article";
+    }
+
 
 }
