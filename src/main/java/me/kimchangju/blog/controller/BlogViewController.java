@@ -25,7 +25,7 @@ public class BlogViewController {
         model.addAttribute("articles",articles);
 
         // articleList.html라는 뷰 조회
-        return "articleList"
+        return "articleList";
     }
 
 }
