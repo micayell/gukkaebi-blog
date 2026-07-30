@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class BlogViewController {
                 .map(ArticleListViewResponse::new)
                 .toList();
         // 블로그 글 리스트 저장
-        model.addAttribute("articles",articles);
+        model.addAttribute("articles", articles);
 
         // articleList.html라는 뷰 조회
         return "articleList";
@@ -39,5 +40,21 @@ public class BlogViewController {
         return "article";
     }
 
+    // 수정 화면을 보여주기 위한 컨트롤러
+    @GetMapping("/new-article")
+    // id 키를 가진 쿼리 파라미터의 값을 id 변수에 매핑(id는 없을 수도 있음)
+    public String newArticle(@RequestParam(required = false) Long id, Model model) {
+        // id가 없으면 생성
+        if (id == null) {
+            model.addAttribute("article", new ArticleViewResponse());
+        }
+        // id가 있으면 수정
+        else {
+            Article article = blogService.findById(id);
+            model.addAttribute("article", new ArticleViewResponse(article));
+        }
+
+        return "newArticle";
+    }
 
 }
